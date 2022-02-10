@@ -1,8 +1,8 @@
 package ru.netology
 
 fun main() {
-    val inputCard = "maestro"
-    val inputMoney = 75000
+    val inputCard = "visa"
+    val inputMoney = 1000
     val monthlyTransfers = 5000
     val sumTransfer = inputMoney + monthlyTransfers
     val result = commission(inputCard, inputMoney, sumTransfer)
@@ -17,7 +17,11 @@ fun commission(inputCard: String, inputMoney: Int, sumTransfer: Int): Int {
         } else {
             0
         }
-        "visa", "mir" -> ((inputMoney * 0.75) / 100) * 100
+        "visa", "mir" -> if (((inputMoney * 0.75) / 100) < 35) {
+            35 * 100
+        } else {
+            ((inputMoney * 0.75) / 100) * 100
+        }
         else -> 0
     }
     return commission.toInt()
