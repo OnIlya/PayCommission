@@ -25,7 +25,7 @@ class MainKtTest {
         // arrange
         val inputCard = "visa"
         val inputMoney = 1000
-        val commission = 500
+        val commission = 3500
         val monthlyTransfers = 5_000
         val sumTransfer = inputMoney + monthlyTransfers
         // act
