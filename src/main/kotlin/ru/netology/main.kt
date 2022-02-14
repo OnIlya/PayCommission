@@ -1,26 +1,29 @@
 package ru.netology
 
 fun main() {
-    val inputCard = "masterCard"
-    val inputMoney = 100_000
-    val monthlyTransfers = 5000
+    val inputCard = "vkPay"
+    val inputMoney = 100_000_000
+    val kopecksInRubles = 100
+    val monthlyTransfers = 0
     val sumTransfer = inputMoney + monthlyTransfers
-    val result = commission(inputCard, inputMoney, sumTransfer)
-    println("$result копеек")
+    val result = commission(inputCard, inputMoney, sumTransfer, kopecksInRubles)
+    println("Комиссия $result коп")
 }
 
-fun commission(inputCard: String, inputMoney: Int, sumTransfer: Int): Int {
+fun commission(inputCard: String, inputMoney: Int, sumTransfer: Int, kopecksInRubles: Int): Int {
+    val commissionMaestroMasterCard = inputMoney * 0.006
+    val commissionVisaMir = inputMoney * 0.0075
 
     val commission = when(inputCard) {
-        "masterCard", "maestro" -> if (sumTransfer > 75_000) {
-            (((inputMoney * 0.6 )/ 100) + 20) * 100
+        "masterCard", "maestro" -> if (sumTransfer > 75_000 * kopecksInRubles) {
+            commissionMaestroMasterCard + (20 * kopecksInRubles)
         } else {
             0
         }
-        "visa", "mir" -> if (((inputMoney * 0.75) / 100) < 35) {
-            35 * 100
+        "visa", "mir" -> if (commissionVisaMir < 35 * kopecksInRubles) {
+            35 * kopecksInRubles
         } else {
-            ((inputMoney * 0.75) / 100) * 100
+            commissionVisaMir
         }
         else -> 0
     }
