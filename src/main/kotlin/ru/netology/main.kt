@@ -3,27 +3,31 @@ package ru.netology
 fun main() {
 
     val paymentSystem = "masterCard"
-    val inputMoney = 100_000
-    val result = commission(paymentSystem, inputMoney)
-    println("Комиссия $result руб")
+    val inputMoney = 156246
+    val result = commission(inputMoney, paymentSystem)
+    println("Комиссия ${result / 100} руб ${result % 100} коп")
+}
+fun convertRub(inputMoney: Int): Int {
+    return inputMoney * 100
 }
 
-fun commission(paymentSystem: String = "vKPay", inputMoney: Int, monthlyTransfers: Int = 0): Int {
+fun commission(inputMoney: Int, paymentSystem: String = "vKPay", monthlyTransfers: Int = 0): Int {
+    val penny = convertRub(inputMoney)
 
     val commission = when(paymentSystem) {
 
         "masterCard", "maestro" -> if (monthlyTransfers + inputMoney < 75_000) {
                 0
         } else {
-            inputMoney * 0.006 + 20
+            penny * 0.006 + 2_000
         }
 
-        "visa", "mir" -> if (inputMoney * 0.0075 < 35) {
-            35
+        "visa", "mir" -> if (penny * 0.0075 < 3_500) {
+            3_500
         } else {
-            inputMoney * 0.0075
+            penny * 0.0075
         }
-            else -> 0
+            else -> error("Неподдерживаемая система оплаты: $paymentSystem")
     }
      return commission.toInt()
 }
